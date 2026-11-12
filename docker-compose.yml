@@ -1,0 +1,18 @@
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      CAMPUS_DATABASE_URL: sqlite:///./artifacts/campus_forecast.db
+      CAMPUS_DATA_ROOT: /app/data
+      CAMPUS_ARTIFACT_ROOT: /app/artifacts
+    volumes:
+      - ./data:/app/data
+      - ./artifacts:/app/artifacts
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - api
